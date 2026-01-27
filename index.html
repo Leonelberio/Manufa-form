@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demande de devis — Streaming / Direct</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Transition de page : double volet + logo central -->
+    <div id="custom-page-loader">
+        <div class="loader-panel-left"></div>
+        <img class="loader-logo" src="MANUFA-LOGO-1.webp" alt="Manufa">
+        <div class="loader-panel-right"></div>
+    </div>
+
+    <!-- data-endpoint : URL du webhook CRM (ex: https://ton-crm.com/webhook/lead). Laisser vide pour afficher un message à la soumission. -->
+    <div class="gmq-wrap" data-endpoint="">
+        <header class="gmq-hero">
+            <img src="MANUFA-LOGO-1.webp" alt="Manufa" class="gmq-hero-logo" width="120" height="auto">
+            <div class="gmq-hero-text">
+                <h1 class="gmq-hero-title">Demander un devis</h1>
+                <p class="gmq-hero-subtitle">Veuillez remplir le formulaire, nous vous contacterons.</p>
+            </div>
+        </header>
+        <div class="gmq-card">
+            <div class="gmq-head">
+                <div>
+                    <div class="gmq-title">Demande de devis — Streaming / Direct</div>
+                    <div class="gmq-sub">Formulaire multi-étapes (sauvegarde automatique) 💡</div>
+                </div>
+                <div class="gmq-progress">
+                    <div class="gmq-progress-bar"><span id="gmqBar"></span></div>
+                    <div class="gmq-progress-text"><span id="gmqStepText">Étape 1/6</span></div>
+                </div>
+            </div>
+
+            <form id="gmqForm" novalidate>
+                <input type="text" name="_hp" id="gmqHp" autocomplete="off" tabindex="-1" aria-hidden="true" class="gmq-hp">
+
+                <section class="gmq-step is-active" data-step="1">
+                    <h3 class="gmq-h3">1) Informations générales</h3>
+                    <div class="gmq-grid">
+                        <div class="gmq-field">
+                            <label>Nom / Entreprise <span class="gmq-req">*</span></label>
+                            <input type="text" name="general.name_company" placeholder="Ex: Manufa" required>
+                        </div>
+                        <div class="gmq-field">
+                            <label>Date de l'événement <span class="gmq-req">*</span></label>
+                            <input type="date" name="general.event_date" class="gmq-date w-full rounded-xl px-4 py-3 border border-white/20 bg-white/5 text-white focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none transition cursor-pointer [color-scheme:dark]" required>
+                        </div>
+                        <div class="gmq-field gmq-col2">
+                            <label>Lieu (Ville + Nom de la salle) <span class="gmq-req">*</span></label>
+                            <input type="text" name="general.location" placeholder="Ex: Lomé — Hôtel 2 Février" required>
+                        </div>
+                        <div class="gmq-field gmq-col2">
+                            <label>Durée totale du direct</label>
+                            <input type="text" name="general.duration" placeholder="Ex: 2h / 1 journée / 3 jours">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="gmq-step" data-step="2">
+                    <h3 class="gmq-h3">2) Type d'événement & plateformes</h3>
+                    <div class="gmq-grid">
+                        <div class="gmq-field">
+                            <label>Type d'événement</label>
+                            <select name="event.event_type" class="gmq-select w-full rounded-xl px-4 py-3 border border-white/20 bg-white/5 text-white focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none transition appearance-none bg-[length:1em_1em] bg-[right_0.75rem_center] bg-no-repeat pr-10 [&>option]:bg-neutral-900 [&>option]:text-white">
+                                <option value="">Sélectionner...</option>
+                                <option>Conférence</option>
+                                <option>Mariage</option>
+                                <option>Concert</option>
+                                <option>Sport</option>
+                                <option>Webinaire</option>
+                                <option>Événement interne</option>
+                                <option>Autre</option>
+                            </select>
+                        </div>
+                        <div class="gmq-field">
+                            <label>Diffusion</label>
+                            <div class="gmq-radio flex flex-wrap gap-3">
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="event.broadcast_type" value="publique" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Publique</label>
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="event.broadcast_type" value="privee" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Privée</label>
+                            </div>
+                        </div>
+                        <div class="gmq-field gmq-col2">
+                            <label>Plateformes (multi-choix)</label>
+                            <div class="gmq-chips flex flex-wrap gap-2">
+                                <label class="inline-flex items-center gap-2 cursor-pointer rounded-full px-3 py-2 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="checkbox" name="event.platforms[]" value="YouTube" class="size-4 shrink-0 accent-white/90 cursor-pointer"> YouTube</label>
+                                <label class="inline-flex items-center gap-2 cursor-pointer rounded-full px-3 py-2 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="checkbox" name="event.platforms[]" value="Facebook" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Facebook</label>
+                                <label class="inline-flex items-center gap-2 cursor-pointer rounded-full px-3 py-2 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="checkbox" name="event.platforms[]" value="Zoom" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Zoom</label>
+                                <label class="inline-flex items-center gap-2 cursor-pointer rounded-full px-3 py-2 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="checkbox" name="event.platforms[]" value="Plateforme securisee" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Plateforme sécurisée</label>
+                                <label class="inline-flex items-center gap-2 cursor-pointer rounded-full px-3 py-2 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="checkbox" name="event.platforms[]" value="Autre" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Autre</label>
+                            </div>
+                        </div>
+                        <div class="gmq-field">
+                            <label>Multidiffusion (Simulcast)</label>
+                            <div class="gmq-radio flex flex-wrap gap-3">
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="event.simulcast" value="oui" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Oui</label>
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="event.simulcast" value="non" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Non</label>
+                            </div>
+                        </div>
+                        <div class="gmq-field">
+                            <label>Interaction (Q&A à l'écran)</label>
+                            <div class="gmq-radio flex flex-wrap gap-3">
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="event.interaction" value="oui" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Oui</label>
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="event.interaction" value="non" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Non</label>
+                            </div>
+                        </div>
+                        <div class="gmq-field gmq-col2">
+                            <label>Détails interaction (si oui)</label>
+                            <input type="text" name="event.interaction_note" placeholder="Ex: Questions via WhatsApp / Slido / YouTube chat...">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="gmq-step" data-step="3">
+                    <h3 class="gmq-h3">3) Configuration technique (Audio & Vidéo)</h3>
+                    <div class="gmq-grid">
+                        <div class="gmq-field">
+                            <label>Nombre de caméras</label>
+                            <select name="tech.camera_count" class="gmq-select w-full rounded-xl px-4 py-3 border border-white/20 bg-white/5 text-white focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none transition appearance-none bg-[length:1em_1em] bg-[right_0.75rem_center] bg-no-repeat pr-10 [&>option]:bg-neutral-900 [&>option]:text-white">
+                                <option value="">Sélectionner...</option>
+                                <option value="1">1 caméra</option>
+                                <option value="2-3">2 à 3 caméras</option>
+                                <option value="4+">4+ caméras</option>
+                            </select>
+                        </div>
+                        <div class="gmq-field">
+                            <label>Type de captation</label>
+                            <select name="tech.capture_type" class="gmq-select w-full rounded-xl px-4 py-3 border border-white/20 bg-white/5 text-white focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none transition appearance-none bg-[length:1em_1em] bg-[right_0.75rem_center] bg-no-repeat pr-10 [&>option]:bg-neutral-900 [&>option]:text-white">
+                                <option value="">Sélectionner...</option>
+                                <option>Fixe sur trépied</option>
+                                <option>Caméraman mobile (HF)</option>
+                                <option>Mixte</option>
+                            </select>
+                        </div>
+                        <div class="gmq-field gmq-col2">
+                            <label>Gestion du son</label>
+                            <select name="tech.audio_source" class="gmq-select w-full rounded-xl px-4 py-3 border border-white/20 bg-white/5 text-white focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none transition appearance-none bg-[length:1em_1em] bg-[right_0.75rem_center] bg-no-repeat pr-10 [&>option]:bg-neutral-900 [&>option]:text-white">
+                                <option value="">Sélectionner...</option>
+                                <option>Récupération flux externe (salle sonorisée)</option>
+                                <option>Micros fournis par nos soins</option>
+                                <option>Les deux</option>
+                            </select>
+                        </div>
+                        <div class="gmq-field gmq-col2">
+                            <label>Micros nécessaires (si fournis par nos soins)</label>
+                            <div class="gmq-chips flex flex-wrap gap-2">
+                                <label class="inline-flex items-center gap-2 cursor-pointer rounded-full px-3 py-2 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="checkbox" name="tech.mics_needed[]" value="Cravate" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Cravate</label>
+                                <label class="inline-flex items-center gap-2 cursor-pointer rounded-full px-3 py-2 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="checkbox" name="tech.mics_needed[]" value="Main" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Main</label>
+                                <label class="inline-flex items-center gap-2 cursor-pointer rounded-full px-3 py-2 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="checkbox" name="tech.mics_needed[]" value="Table" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Table</label>
+                            </div>
+                        </div>
+                        <div class="gmq-field gmq-col2">
+                            <label>Contenu additionnel</label>
+                            <div class="gmq-chips flex flex-wrap gap-2">
+                                <label class="inline-flex items-center gap-2 cursor-pointer rounded-full px-3 py-2 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="checkbox" name="tech.extra_content[]" value="Slides" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Slides (PowerPoint)</label>
+                                <label class="inline-flex items-center gap-2 cursor-pointer rounded-full px-3 py-2 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="checkbox" name="tech.extra_content[]" value="Videos" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Vidéos pré-enregistrées</label>
+                                <label class="inline-flex items-center gap-2 cursor-pointer rounded-full px-3 py-2 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="checkbox" name="tech.extra_content[]" value="Logos" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Logos / overlays</label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="gmq-step" data-step="4">
+                    <h3 class="gmq-h3">4) Connectivité & logistique</h3>
+                    <div class="gmq-grid">
+                        <div class="gmq-field gmq-col2">
+                            <label>Connexion Internet (sur place)</label>
+                            <select name="logistics.internet" class="gmq-select w-full rounded-xl px-4 py-3 border border-white/20 bg-white/5 text-white focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none transition appearance-none bg-[length:1em_1em] bg-[right_0.75rem_center] bg-no-repeat pr-10 [&>option]:bg-neutral-900 [&>option]:text-white">
+                                <option value="">Sélectionner...</option>
+                                <option>Ligne Ethernet dédiée (RJ45)</option>
+                                <option>Wi-Fi (à tester)</option>
+                                <option>Aucune / inconnue</option>
+                            </select>
+                        </div>
+                        <div class="gmq-field gmq-col2">
+                            <label>Faut-il prévoir un kit 4G/5G / Starlink ?</label>
+                            <div class="gmq-radio flex flex-wrap gap-3">
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="logistics.bonded" value="oui" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Oui</label>
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="logistics.bonded" value="non" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Non</label>
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="logistics.bonded" value="a_evaluer" class="size-4 shrink-0 accent-white/90 cursor-pointer"> À évaluer</label>
+                            </div>
+                        </div>
+                        <div class="gmq-field gmq-col2">
+                            <label>Repérage technique en amont</label>
+                            <div class="gmq-radio flex flex-wrap gap-3">
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="logistics.scouting" value="oui" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Oui</label>
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="logistics.scouting" value="non" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Non</label>
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="logistics.scouting" value="a_evaluer" class="size-4 shrink-0 accent-white/90 cursor-pointer"> À évaluer</label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="gmq-step" data-step="5">
+                    <h3 class="gmq-h3">5) Post-production & options</h3>
+                    <div class="gmq-grid">
+                        <div class="gmq-field gmq-col2">
+                            <label>Enregistrement</label>
+                            <select name="post.recording" class="gmq-select w-full rounded-xl px-4 py-3 border border-white/20 bg-white/5 text-white focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none transition appearance-none bg-[length:1em_1em] bg-[right_0.75rem_center] bg-no-repeat pr-10 [&>option]:bg-neutral-900 [&>option]:text-white">
+                                <option value="">Sélectionner...</option>
+                                <option>Fichier brut</option>
+                                <option>Montage Best-of</option>
+                                <option>Les deux</option>
+                            </select>
+                        </div>
+                        <div class="gmq-field gmq-col2">
+                            <label>Habillage graphique (lower thirds)</label>
+                            <div class="gmq-radio flex flex-wrap gap-3">
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="post.graphics" value="oui" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Oui</label>
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="post.graphics" value="non" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Non</label>
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="post.graphics" value="a_evaluer" class="size-4 shrink-0 accent-white/90 cursor-pointer"> À évaluer</label>
+                            </div>
+                        </div>
+                        <div class="gmq-field gmq-col2">
+                            <label>Traduction / interprétation simultanée</label>
+                            <div class="gmq-radio flex flex-wrap gap-3">
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="post.translation" value="oui" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Oui</label>
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="post.translation" value="non" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Non</label>
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="post.translation" value="a_evaluer" class="size-4 shrink-0 accent-white/90 cursor-pointer"> À évaluer</label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="gmq-step" data-step="6">
+                    <h3 class="gmq-h3">6) Contact & récapitulatif</h3>
+                    <div class="gmq-grid">
+                        <div class="gmq-field">
+                            <label>Email</label>
+                            <input type="email" name="contact.email" placeholder="ex: contact@entreprise.com">
+                        </div>
+                        <div class="gmq-field">
+                            <label>Téléphone <span class="gmq-req">*</span></label>
+                            <input type="tel" name="contact.phone" placeholder="+228 ..." required>
+                        </div>
+                        <div class="gmq-field gmq-col2">
+                            <label>Notes / contraintes</label>
+                            <textarea name="contact.notes" rows="4" placeholder="Timing, besoins spécifiques, contraintes salle, etc."></textarea>
+                        </div>
+                    </div>
+                    <div class="gmq-summary">
+                        <div class="gmq-summary-title">Récapitulatif</div>
+                        <pre id="gmqSummary"></pre>
+                    </div>
+                </section>
+
+                <div class="gmq-actions">
+                    <button type="button" class="gmq-btn gmq-btn-ghost" id="gmqBack">Retour</button>
+                    <button type="button" class="gmq-btn gmq-btn-ghost" id="gmqReset">Réinitialiser</button>
+                    <div class="gmq-spacer"></div>
+                    <button type="button" class="gmq-btn" id="gmqNext">Suivant</button>
+                    <button type="submit" class="gmq-btn gmq-btn-primary" id="gmqSubmit">Envoyer au CRM</button>
+                </div>
+
+                <div class="gmq-toast" id="gmqToast" role="status" aria-live="polite"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+    (function() {
+        var body = document.body;
+        var forceShowPage = setTimeout(function() { body.classList.add('loaded'); }, 3000);
+
+        window.addEventListener('load', function() {
+            clearTimeout(forceShowPage);
+            setTimeout(function() { body.classList.add('loaded'); }, 400);
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('a').forEach(function(a) {
+                a.addEventListener('click', function(e) {
+                    var href = a.getAttribute('href');
+                    var target = a.getAttribute('target');
+
+                    if (!href ||
+                        href.indexOf('#') === 0 ||
+                        href.indexOf('javascript:') === 0 ||
+                        target === '_blank' ||
+                        a.getAttribute('download') ||
+                        e.metaKey || e.ctrlKey || e.shiftKey) return;
+
+                    try {
+                        var url = new URL(href, location.href);
+                        if (url.origin !== location.origin || url.pathname === location.pathname) return;
+                    } catch (_) { return; }
+
+                    e.preventDefault();
+                    body.classList.remove('loaded');
+                    body.classList.add('page-leaving');
+                    setTimeout(function() { window.location.href = href; }, 700);
+                });
+            });
+
+            window.addEventListener('pageshow', function(event) {
+                if (event.persisted) {
+                    body.classList.add('loaded');
+                    body.classList.remove('page-leaving');
+                }
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

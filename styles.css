@@ -1,0 +1,447 @@
+/* Formulaire Devis Live — multi-étapes */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #0d0d0d;
+    color: #fff;
+    min-height: 100vh;
+}
+
+/* Transition de page : double volet + logo central */
+#custom-page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+body:not(.loaded) #custom-page-loader {
+    background-color: #111;
+    pointer-events: all;
+}
+
+.loader-panel-left,
+.loader-panel-right {
+    position: absolute;
+    top: 0;
+    width: 51%;
+    height: 100%;
+    background-color: #111;
+    transition: transform 0.6s cubic-bezier(0.86, 0, 0.07, 1);
+    will-change: transform;
+}
+
+.loader-panel-left {
+    left: 0;
+    transform: translateX(0);
+}
+
+.loader-panel-right {
+    right: 0;
+    transform: translateX(0);
+}
+
+.loader-logo {
+    position: relative;
+    z-index: 1000000;
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-width: 180px;
+    height: auto;
+}
+
+body.loaded #custom-page-loader {
+    background-color: transparent;
+}
+
+body.loaded .loader-panel-left {
+    transform: translateX(-100%);
+}
+
+body.loaded .loader-panel-right {
+    transform: translateX(100%);
+}
+
+body.loaded .loader-logo {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+}
+
+body.page-leaving #custom-page-loader {
+    pointer-events: all;
+    background-color: #111;
+    transition-delay: 0.4s;
+}
+
+body.page-leaving .loader-panel-left,
+body.page-leaving .loader-panel-right {
+    transform: translateX(0);
+}
+
+body.page-leaving .loader-logo {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: 0.3s;
+}
+
+.gmq-wrap {
+    max-width: 920px;
+    margin: 20px auto;
+    padding: 0 12px;
+}
+
+.gmq-hero {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.gmq-hero-logo {
+    flex-shrink: 0;
+    height: auto;
+    max-height: 56px;
+    object-fit: contain;
+}
+
+.gmq-hero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.gmq-hero-title {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #fff;
+    line-height: 1.2;
+}
+
+.gmq-hero-subtitle {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.4;
+}
+
+.gmq-card {
+    border-radius: 18px;
+    background: rgba(18, 18, 18, 0.92);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+.gmq-head {
+    padding: 18px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.gmq-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.gmq-sub {
+    font-size: 13px;
+    opacity: 0.75;
+    margin-top: 2px;
+}
+
+.gmq-progress {
+    min-width: 240px;
+    text-align: right;
+}
+
+.gmq-progress-bar {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.gmq-progress-bar span {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: rgba(255, 255, 255, 0.7);
+    transition: width 0.25s ease;
+}
+
+.gmq-progress-text {
+    font-size: 12px;
+    opacity: 0.8;
+    margin-top: 8px;
+}
+
+#gmqForm {
+    padding: 18px 20px 20px;
+}
+
+.gmq-hp {
+    position: absolute;
+    left: -9999px;
+    height: 1px;
+    width: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.gmq-h3 {
+    margin: 0 0 14px;
+    font-size: 15px;
+    font-weight: 700;
+    opacity: 0.95;
+}
+
+.gmq-req {
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 600;
+}
+
+.gmq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.gmq-col2 {
+    grid-column: 1 / -1;
+}
+
+.gmq-field label {
+    display: block;
+    font-size: 12px;
+    opacity: 0.85;
+    margin-bottom: 8px;
+}
+
+/* Text inputs, textarea (radios/checkboxes/date styled separately or by Tailwind) */
+.gmq-field input:not([type="radio"]):not([type="checkbox"]):not([type="date"]),
+.gmq-field textarea {
+    width: 100%;
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    outline: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.gmq-field input:not([type="date"])::placeholder,
+.gmq-field textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.gmq-field input:not([type="radio"]):not([type="checkbox"]):not([type="date"]):focus,
+.gmq-field textarea:focus {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Selects: Tailwind handles layout; add dropdown arrow */
+.gmq-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.8)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+}
+
+.gmq-select option {
+    background: #1a1a1a;
+    color: #fff;
+}
+
+/* Date input — aligned with selects, dark calendar popup */
+.gmq-date,
+.gmq-field input[type="date"] {
+    color-scheme: dark;
+    min-height: 48px;
+    min-width: 0;
+}
+
+.gmq-date::-webkit-calendar-picker-indicator,
+.gmq-field input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.7;
+    cursor: pointer;
+    padding: 4px;
+    margin-left: 4px;
+}
+
+.gmq-date::-webkit-datetime-edit,
+.gmq-field input[type="date"]::-webkit-datetime-edit {
+    color: #fff;
+}
+
+.gmq-date::-webkit-datetime-edit-fields-wrapper,
+.gmq-field input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+    padding: 0;
+}
+
+.gmq-step {
+    display: none;
+    animation: gmqIn 0.22s ease;
+}
+
+.gmq-step.is-active {
+    display: block;
+}
+
+@keyframes gmqIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.gmq-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gmq-spacer {
+    flex: 1;
+}
+
+.gmq-btn {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-radius: 12px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.gmq-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.gmq-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.gmq-btn-ghost {
+    background: transparent;
+}
+
+.gmq-btn-primary {
+    background: rgba(255, 255, 255, 0.85);
+    color: #111;
+    border-color: transparent;
+}
+
+.gmq-btn-primary:hover {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.gmq-summary {
+    margin-top: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.gmq-summary-title {
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 8px;
+    opacity: 0.9;
+}
+
+#gmqSummary {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 12px;
+    opacity: 0.85;
+}
+
+.gmq-toast {
+    display: none;
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 13px;
+    opacity: 0.95;
+}
+
+@media (max-width: 720px) {
+    .gmq-hero {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .gmq-hero-title {
+        font-size: 1.5rem;
+    }
+
+    .gmq-head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .gmq-progress {
+        width: 100%;
+        text-align: left;
+    }
+
+    .gmq-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gmq-col2 {
+        grid-column: auto;
+    }
+
+    .gmq-actions {
+        flex-wrap: wrap;
+    }
+
+    .gmq-spacer {
+        display: none;
+    }
+}
