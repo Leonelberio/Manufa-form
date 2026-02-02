@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demande de devis — Streaming / Direct</title>
+    <link rel="icon" href="MANUFA%20LOGO%20MINI%201.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -11,24 +12,23 @@
     <!-- Transition de page : double volet + logo central -->
     <div id="custom-page-loader">
         <div class="loader-panel-left"></div>
-        <img class="loader-logo" src="MANUFA-LOGO-1.webp" alt="Manufa">
+        <img class="loader-logo" src="MANUFA%20LOGO%20MINI%201.png" alt="Manufa">
         <div class="loader-panel-right"></div>
     </div>
 
     <!-- data-endpoint : URL du webhook CRM (ex: https://ton-crm.com/webhook/lead). Laisser vide pour afficher un message à la soumission. -->
     <div class="gmq-wrap" data-endpoint="">
         <header class="gmq-hero">
-            <img src="MANUFA-LOGO-1.webp" alt="Manufa" class="gmq-hero-logo" width="120" height="auto">
-            <div class="gmq-hero-text">
-                <h1 class="gmq-hero-title">Demander un devis</h1>
-                <p class="gmq-hero-subtitle">Veuillez remplir le formulaire, nous vous contacterons.</p>
-            </div>
+            <img src="MANUFA-LOGO-1.webp" alt="Manufa" class="gmq-hero-logo" width="160" height="auto">
         </header>
+        <div class="gmq-intro">
+            <h1 class="gmq-hero-title">Demander un devis</h1>
+            <p class="gmq-hero-subtitle">Veuillez remplir le formulaire, nous vous contacterons.</p>
+        </div>
         <div class="gmq-card">
             <div class="gmq-head">
                 <div>
                     <div class="gmq-title">Demande de devis — Streaming / Direct</div>
-                    <div class="gmq-sub">Formulaire multi-étapes (sauvegarde automatique) 💡</div>
                 </div>
                 <div class="gmq-progress">
                     <div class="gmq-progress-bar"><span id="gmqBar"></span></div>

@@ -60,7 +60,7 @@ body:not(.loaded) #custom-page-loader {
     opacity: 1;
     transform: scale(1);
     transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    max-width: 180px;
+    max-width: 240px;
     height: auto;
 }
 
@@ -117,19 +117,20 @@ body.page-leaving .loader-logo {
 .gmq-hero-logo {
     flex-shrink: 0;
     height: auto;
-    max-height: 56px;
+    max-height: 72px;
     object-fit: contain;
 }
 
-.gmq-hero-text {
+.gmq-intro {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    margin-bottom: 24px;
 }
 
 .gmq-hero-title {
     margin: 0;
-    font-size: 1.75rem;
+    font-size: 2.25rem;
     font-weight: 700;
     letter-spacing: -0.02em;
     color: #fff;
@@ -138,7 +139,7 @@ body.page-leaving .loader-logo {
 
 .gmq-hero-subtitle {
     margin: 0;
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.4;
 }
@@ -416,7 +417,7 @@ body.page-leaving .loader-logo {
     }
 
     .gmq-hero-title {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
     }
 
     .gmq-head {
