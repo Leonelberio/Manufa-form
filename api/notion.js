@@ -29,7 +29,7 @@ function buildNotionProperties(payload) {
         payload.general?.location && `Lieu: ${payload.general.location}`,
         payload.event?.event_type && `Type: ${payload.event.event_type}`,
         payload.contact?.email && `Email: ${payload.contact.email}`,
-        payload.contact?.phone && `Tél: ${payload.contact.phone}`,
+        (payload.general?.contact_number || payload.contact?.phone) && `Tél: ${payload.general?.contact_number || payload.contact?.phone}`,
     ].filter(Boolean).join(" | ");
     const fullJson = JSON.stringify(payload, null, 2);
     const content = summary + "\n\n---\n\n" + truncate(fullJson, 1900);

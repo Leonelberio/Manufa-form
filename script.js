@@ -266,8 +266,8 @@
         if (!validateStep(current)) return;
 
         var payload = getFormDataObject();
-        if (!payload.general.name_company || !payload.general.event_date || !payload.contact.phone) {
-            showToast("Champs requis manquants: Nom/Entreprise, Date, Téléphone.");
+if (!payload.general.name_company || !payload.general.event_date || !payload.general.contact_number) {
+                showToast("Champs requis manquants: Nom/Entreprise, Date, Numéro ou contact.");
             return;
         }
 
