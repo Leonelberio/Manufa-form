@@ -16,7 +16,7 @@
         <div class="loader-panel-right"></div>
     </div>
 
-    <!-- data-endpoint : URL du webhook CRM (ex: https://ton-crm.com/webhook/lead). Laisser vide pour afficher un message à la soumission. -->
+    <!-- data-endpoint : URL d'envoi. Ex: webhook CRM, ou API Notion après déploi Vercel (voir README). Vide = message à la soumission. -->
     <div class="gmq-wrap" data-endpoint="">
         <header class="gmq-hero">
             <img src="MANUFA-LOGO-1.webp" alt="Manufa" class="gmq-hero-logo" width="160" height="auto">
@@ -42,15 +42,19 @@
                 <section class="gmq-step is-active" data-step="1">
                     <h3 class="gmq-h3">1) Informations générales</h3>
                     <div class="gmq-grid">
-                        <div class="gmq-field">
+                        <div class="gmq-field gmq-col2">
                             <label>Nom / Entreprise <span class="gmq-req">*</span></label>
                             <input type="text" name="general.name_company" placeholder="Ex: Manufa" required>
+                        </div>
+                        <div class="gmq-field gmq-col2">
+                            <label>Numéro ou contact <span class="gmq-req">*</span></label>
+                            <input type="tel" name="general.contact_number" placeholder="Ex: +228 90 00 00 00" required>
                         </div>
                         <div class="gmq-field">
                             <label>Date de l'événement <span class="gmq-req">*</span></label>
                             <input type="date" name="general.event_date" class="gmq-date w-full rounded-xl px-4 py-3 border border-white/20 bg-white/5 text-white focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none transition cursor-pointer [color-scheme:dark]" required>
                         </div>
-                        <div class="gmq-field gmq-col2">
+                        <div class="gmq-field">
                             <label>Lieu (Ville + Nom de la salle) <span class="gmq-req">*</span></label>
                             <input type="text" name="general.location" placeholder="Ex: Lomé — Hôtel 2 Février" required>
                         </div>
