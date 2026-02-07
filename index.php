@@ -203,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                         <div class="gmq-field">
-                            <label>Interaction (Q&A à l'écran)</label>
+                            <label>Interaction (Q&R à l'écran)</label>
                             <div class="gmq-radio">
                                 <label><input type="radio" name="event.interaction" value="oui"> Oui</label>
                                 <label><input type="radio" name="event.interaction" value="non"> Non</label>

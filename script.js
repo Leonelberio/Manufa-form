@@ -176,8 +176,68 @@
         return ok;
     }
 
+    var sectionLabels = {
+        general: "Général",
+        event: "Événement",
+        tech: "Technique",
+        logistics: "Logistique",
+        post: "Post-production",
+        contact: "Contact"
+    };
+
+    function fieldLabel(key) {
+        var labels = {
+            name_company: "Nom / Entreprise",
+            contact_number: "Numéro ou contact",
+            event_date: "Date de l'événement",
+            location: "Lieu",
+            duration: "Durée",
+            event_type: "Type d'événement",
+            broadcast_type: "Diffusion",
+            platforms: "Plateformes",
+            simulcast: "Simulcast",
+            interaction: "Interaction",
+            interaction_note: "Détails interaction",
+            camera_count: "Nombre de caméras",
+            capture_type: "Type de captation",
+            audio_source: "Gestion du son",
+            mics_needed: "Micros nécessaires",
+            extra_content: "Contenu additionnel",
+            internet: "Connexion Internet",
+            bonded: "Kit 4G/5G / Starlink",
+            scouting: "Repérage technique",
+            recording: "Enregistrement",
+            graphics: "Habillage graphique",
+            translation: "Traduction",
+            email: "Email",
+            phone: "Téléphone",
+            notes: "Notes / contraintes"
+        };
+        return labels[key] || key.replace(/_/g, " ");
+    }
+
+    function formatValue(val) {
+        if (val === undefined || val === null) return "—";
+        if (Array.isArray(val)) return val.length ? val.join(", ") : "—";
+        if (typeof val === "string" && val.trim() === "") return "—";
+        return String(val);
+    }
+
     function updateSummary() {
-        summary.textContent = JSON.stringify(getFormDataObject(), null, 2);
+        var obj = getFormDataObject();
+        var html = "<table class=\"gmq-summary-table\"><thead><tr><th>Section</th><th>Champ</th><th>Valeur</th></tr></thead><tbody>";
+        ["general", "event", "tech", "logistics", "post", "contact"].forEach(function (section) {
+            var data = obj[section];
+            if (!data || typeof data !== "object") return;
+            var sectionName = sectionLabels[section] || section;
+            Object.keys(data).forEach(function (key) {
+                if (section === "contact" && key === "phone") return;
+                var val = data[key];
+                html += "<tr><td>" + sectionName + "</td><td>" + fieldLabel(key) + "</td><td>" + formatValue(val) + "</td></tr>";
+            });
+        });
+        html += "</tbody></table>";
+        summary.innerHTML = html;
     }
 
     form.addEventListener("input", saveToLocal);
@@ -250,7 +310,7 @@
             })
             .then(function () {
                 btnSubmit.disabled = false;
-                btnSubmit.textContent = "Envoyer au CRM";
+                btnSubmit.textContent = "Envoyer";
             });
     });
 

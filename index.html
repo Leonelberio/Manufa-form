@@ -106,7 +106,7 @@
                             </div>
                         </div>
                         <div class="gmq-field">
-                            <label>Interaction (Q&A à l'écran)</label>
+                            <label>Interaction (Q&R à l'écran)</label>
                             <div class="gmq-radio flex flex-wrap gap-3">
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="event.interaction" value="oui" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Oui</label>
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer rounded-xl px-4 py-2.5 border border-white/20 bg-white/5 text-white/90 transition has-[:checked]:border-white/50 has-[:checked]:bg-white/10"><input type="radio" name="event.interaction" value="non" class="size-4 shrink-0 accent-white/90 cursor-pointer"> Non</label>
@@ -248,7 +248,7 @@
                     </div>
                     <div class="gmq-summary">
                         <div class="gmq-summary-title">Récapitulatif</div>
-                        <pre id="gmqSummary"></pre>
+                        <div id="gmqSummary" class="gmq-summary-body"></div>
                     </div>
                 </section>
 
@@ -257,7 +257,7 @@
                     <button type="button" class="gmq-btn gmq-btn-ghost" id="gmqReset">Réinitialiser</button>
                     <div class="gmq-spacer"></div>
                     <button type="button" class="gmq-btn" id="gmqNext">Suivant</button>
-                    <button type="submit" class="gmq-btn gmq-btn-primary" id="gmqSubmit">Envoyer au CRM</button>
+                    <button type="submit" class="gmq-btn gmq-btn-primary" id="gmqSubmit">Envoyer</button>
                 </div>
 
                 <div class="gmq-toast" id="gmqToast" role="status" aria-live="polite"></div>

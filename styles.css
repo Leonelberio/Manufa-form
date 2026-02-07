@@ -390,12 +390,35 @@ body.page-leaving .loader-logo {
     opacity: 0.9;
 }
 
-#gmqSummary {
+.gmq-summary-body {
     margin: 0;
-    white-space: pre-wrap;
-    word-break: break-word;
     font-size: 12px;
-    opacity: 0.85;
+    opacity: 0.9;
+    overflow-x: auto;
+}
+
+.gmq-summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.gmq-summary-table th,
+.gmq-summary-table td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gmq-summary-table th {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.gmq-summary-table td:last-child {
+    word-break: break-word;
+    max-width: 60%;
 }
 
 .gmq-toast {
