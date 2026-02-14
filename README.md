@@ -42,37 +42,33 @@ Dans `index.html`, sur la div `.gmq-wrap`, mets l’URL de ton webhook dans `dat
 <div class="gmq-wrap" data-endpoint="https://ton-crm.com/webhook/lead">
 ```
 
-### Option B : Envoyer vers Notion (Site internet MANUFA)
+### Option B : Envoyer vers Notion (Manufa)
 
-Pour envoyer les réponses dans [Notion – Site internet MANUFA](https://www.notion.so/Site-internet-MANUFA-30038b0dfbe3809f9699f622dacf1ff4) :
+Pour envoyer les réponses dans la [base Notion](https://www.notion.so/303f3f3c00fb801aaec6cfd6273491c2) :
 
 1. **Intégration Notion**
    - Va sur [notion.so/my-integrations](https://www.notion.so/my-integrations)
    - Crée une intégration, récupère le **Secret** (NOTION_API_KEY).
 
 2. **Base dans Notion**
-   - Dans la page « Site internet MANUFA », crée une **base de données** (table en base pleine page ou en bloc).
-   - Ajoute trois propriétés :
-     - **Titre** (type Titre)
-     - **Date** (type Date)
-     - **Contenu** (type Texte)
-   - Ouvre la base en « Pleine page », l’URL contient l’ID :  
-     `https://www.notion.so/...?v=XXXX` → la partie avant `?` est l’ID (32 caractères). Copie cet **NOTION_DATABASE_ID**.
+   - La base doit avoir au minimum trois propriétés : **Titre** (Titre), **Date** (Date), **Contenu** (Texte).
+   - ID de la base (dans l’URL) : `303f3f3c00fb801aaec6cfd6273491c2`.
    - Dans la base : **•••** → **Ajouter des connexions** → lie ton intégration.
 
 3. **Déployer l’API**
    - Déploie ce projet sur [Vercel](https://vercel.com) (connexion GitHub puis import du repo).
    - Dans le projet Vercel : **Settings** → **Environment Variables** :
-     - `NOTION_API_KEY` = le secret de l’intégration
-     - `NOTION_DATABASE_ID` = l’ID de la base (32 caractères)
+     - `NOTION_API_KEY` = le secret de l’intégration (ne jamais le committer dans le dépôt)
+     - `NOTION_DATABASE_ID` = `303f3f3c00fb801aaec6cfd6273491c2`
    - Redéploie si besoin.
 
 4. **Lier le formulaire**
-   - Dans `index.html`, sur `.gmq-wrap`, mets l’URL de l’API en `data-endpoint` :
+   - Dans `index.html`, l’attribut `data-endpoint` pointe déjà vers l’API Notion avec un placeholder.
+   - Remplace `YOUR-VERCEL-APP` par l’URL réelle de ton projet Vercel (ex. `manufa-form.vercel.app`) :
    ```html
-   <div class="gmq-wrap" data-endpoint="https://TON-PROJET.vercel.app/api/notion">
+   <div class="gmq-wrap" data-endpoint="https://manufa-form.vercel.app/api/notion">
    ```
-   Remplace `TON-PROJET` par l’URL fournie par Vercel.
+   Une fois le projet déployé sur Vercel et les variables d’environnement renseignées, chaque soumission du formulaire enverra les données vers ta base Notion.
 
 Sans `data-endpoint` rempli, le formulaire affiche un message à la soumission ; les données restent en LocalStorage.
 

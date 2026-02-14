@@ -314,7 +314,26 @@ if (!payload.general.name_company || !payload.general.event_date || !payload.gen
             });
     });
 
+    // Presélection « Type d'événement » via paramètre URL ?type=
+    // Valeurs : reunions | production-evenementielle | regie-live
+    var typeParamMap = {
+        reunions: "Réunions et conférence",
+        "production-evenementielle": "Production évènementielle",
+        "regie-live": "Régie audiovisuelle et live streaming"
+    };
+    function applyTypeFromUrl() {
+        var params = new URLSearchParams(window.location.search);
+        var typeSlug = (params.get("type") || "").trim().toLowerCase();
+        var value = typeParamMap[typeSlug];
+        var selectEl = form.querySelector("[name=\"event.event_type\"]");
+        if (value && selectEl && [].some.call(selectEl.options, function (o) { return o.value === value; })) {
+            selectEl.value = value;
+            saveToLocal();
+        }
+    }
+
     loadFromLocal();
+    applyTypeFromUrl();
     setStep(1);
     saveToLocal();
 })();

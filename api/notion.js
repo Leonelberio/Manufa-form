@@ -6,10 +6,10 @@
  *   NOTION_API_KEY  — Secret de l’intégration Notion
  *   NOTION_DATABASE_ID — ID de la base (créée dans la page Notion)
  *
- * Base Notion : propriétés requises
- *   - Titre (title)
- *   - Date (date)
- *   - Contenu (rich_text)
+ * Base Notion "Événements en direct" : propriétés utilisées
+ *   - Nom (title)
+ *   - Date événement (date)
+ *   - Notes (rich_text)
  */
 
 const NOTION_API = "https://api.notion.com/v1";
@@ -35,16 +35,16 @@ function buildNotionProperties(payload) {
     const content = summary + "\n\n---\n\n" + truncate(fullJson, 1900);
 
     const props = {
-        Titre: {
+        Nom: {
             title: [{ text: { content: truncate(title, 200) } }],
         },
-        Contenu: {
+        Notes: {
             rich_text: [{ text: { content: truncate(content, 2000) } }],
         },
     };
 
     if (date) {
-        props.Date = { date: { start: date } };
+        props["Date événement"] = { date: { start: date } };
     }
 
     return props;
