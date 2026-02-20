@@ -52,7 +52,7 @@
                         </div>
                         <div class="gmq-field">
                             <label>Date de l'événement <span class="gmq-req">*</span></label>
-                            <input type="date" name="general.event_date" class="gmq-date w-full rounded-xl px-4 py-3 border border-white/20 bg-white/5 text-white focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none transition cursor-pointer [color-scheme:dark]" required>
+                            <input type="date" name="general.event_date" min="2000-01-01" max="2100-12-31" class="gmq-date w-full rounded-xl px-4 py-3 border border-white/20 bg-white/5 text-white focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none transition cursor-pointer [color-scheme:dark]" required>
                         </div>
                         <div class="gmq-field">
                             <label>Lieu (Ville + Nom de la salle) <span class="gmq-req">*</span></label>
@@ -242,10 +242,6 @@
                             <textarea name="contact.notes" rows="4" placeholder="Timing, besoins spécifiques, contraintes salle, etc."></textarea>
                         </div>
                     </div>
-                    <div class="gmq-summary">
-                        <div class="gmq-summary-title">Récapitulatif</div>
-                        <div id="gmqSummary" class="gmq-summary-body"></div>
-                    </div>
                 </section>
 
                 <div class="gmq-actions">
@@ -258,6 +254,16 @@
 
                 <div class="gmq-toast" id="gmqToast" role="status" aria-live="polite"></div>
             </form>
+        </div>
+
+        <div id="gmqSuccessModal" class="gmq-modal" role="dialog" aria-labelledby="gmqSuccessModalTitle" aria-modal="true" hidden>
+            <div class="gmq-modal-backdrop"></div>
+            <div class="gmq-modal-box">
+                <div class="gmq-modal-icon">✓</div>
+                <h2 id="gmqSuccessModalTitle" class="gmq-modal-title">Demande envoyée</h2>
+                <p class="gmq-modal-text">Votre demande de devis a bien été enregistrée. Nous vous recontacterons rapidement.</p>
+                <button type="button" class="gmq-btn gmq-btn-primary gmq-modal-btn" id="gmqSuccessModalClose">Fermer</button>
+            </div>
         </div>
     </div>
 

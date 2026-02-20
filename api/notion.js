@@ -77,6 +77,22 @@ export default async function handler(req, res) {
         return res.status(400).json({ ok: false, message: "Body invalide." });
     }
 
+    const qp = req.query || {};
+    const eventTypeParam = String(qp.event_type || qp.type || "").trim();
+    if (eventTypeParam) {
+        const map = {
+            reunions: "Réunions et conférence",
+            "production-evenementielle": "Production événementielle",
+            "regie-live": "Régie audiovisuelle et live streaming",
+        };
+        const slug = eventTypeParam.toLowerCase();
+        const eventTypeValue = map[slug] || eventTypeParam.replace(/-/g, " ");
+        payload.event = payload.event && typeof payload.event === "object" ? payload.event : {};
+        if (!payload.event.event_type) {
+            payload.event.event_type = eventTypeValue;
+        }
+    }
+
     const properties = buildNotionProperties(payload);
 
     try {

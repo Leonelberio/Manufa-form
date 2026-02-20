@@ -1,9 +1,55 @@
 # Formulaire Devis Manufa
 
-Formulaire multi-étapes (HTML, CSS, JS) pour demandes de devis — streaming / direct.  
-Sauvegarde automatique dans le navigateur (LocalStorage) et envoi optionnel vers un webhook CRM.
+Formulaire multi-étapes pour demandes de devis — streaming / direct.  
+Sauvegarde automatique (LocalStorage) et envoi vers Notion ou webhook CRM.
 
-## Déployer sur GitHub Pages
+Disponible en **HTML/JS** (GitHub Pages, Vercel) et en **PHP** (hébergement classique).
+
+---
+
+## Version PHP (recommandée pour Notion)
+
+Tout le flux (formulaire + envoi Notion) tourne en PHP, sans Vercel.
+
+### Fichiers PHP
+
+| Fichier | Rôle |
+|--------|------|
+| `index.php` | Page formulaire ; `data-endpoint` est rempli automatiquement |
+| `submit.php` | Reçoit le JSON, crée une page dans la base Notion |
+| `config.php` | Charge `.env` et expose `notion_api_key()`, `notion_database_id()`, `submit_url()` |
+
+### Configuration
+
+1. **Copier les variables d’environnement**
+   ```bash
+   cp .env.example .env
+   ```
+   Éditer `.env` et renseigner :
+   - `NOTION_API_KEY` — secret de l’intégration Notion
+   - `NOTION_DATABASE_ID` — ID de la base (ex. `303f3f3c00fb801aaec6cfd6273491c2`)
+
+2. **Notion**
+   - Créer une intégration sur [notion.so/my-integrations](https://www.notion.so/my-integrations)
+   - Dans la base : **•••** → **Ajouter des connexions** → lier l’intégration
+   - La base doit avoir les propriétés : **Nom**, **Date événement**, **Notes**
+
+3. **Lancer en local**
+   ```bash
+   php -S localhost:8000
+   ```
+   Puis ouvrir `http://localhost:8000/index.php`
+
+4. **Hébergement**
+   Déployer `index.php`, `submit.php`, `config.php`, `styles.css`, `script.js` et les assets.  
+   Configurer les variables d’environnement (ou un `.env` hors du web root si possible).  
+   L’URL de soumission est relative (`submit.php`) sauf si tu définis `FORM_BASE_URL` dans `.env`.
+
+5. **Hébergement sur NAS** — Voir **[DEPLOY-NAS.md](DEPLOY-NAS.md)** (fichiers à copier, Synology, QNAP).
+
+---
+
+## Déployer sur GitHub Pages (version statique HTML/JS)
 
 1. **Créer un dépôt sur GitHub**
    - Va sur [github.com/new](https://github.com/new)
@@ -76,14 +122,16 @@ Sans `data-endpoint` rempli, le formulaire affiche un message à la soumission ;
 
 | Fichier | Rôle |
 |--------|------|
-| `index.html` | Page et formulaire |
+| `index.php` | Formulaire (PHP) — endpoint Notion injecté automatiquement |
+| `submit.php` | Traitement POST → création page Notion |
+| `config.php` | Config (`.env`, Notion, URL de soumission) |
+| `index.html` | Formulaire statique (GitHub Pages) — à utiliser avec `data-endpoint` Vercel |
 | `styles.css` | Styles |
-| `script.js` | Étapes, LocalStorage, envoi |
-| `api/notion.js` | API Vercel : envoi des données vers une base Notion |
+| `script.js` | Étapes, LocalStorage, envoi (commun HTML/PHP) |
+| `api/notion.js` | API Vercel (optionnel si tu restes en HTML + Vercel) |
 | `vercel.json` | Config Vercel |
+| `.env.example` | Exemple de variables pour PHP (copier en `.env`) |
 | `MANUFA-LOGO-1.webp` | Logo |
-| `index.php` | Version PHP (pour hébergement avec PHP, hors GitHub Pages) |
-| `start-server.bat` | Lancer un serveur PHP en local sous Windows |
 
 ## Licence
 

@@ -1,0 +1,13 @@
+# Copier en .env et remplir. Ne pas committer .env.
+NOTION_API_KEY=
+NOTION_DATABASE_ID=303f3f3c00fb801aaec6cfd6273491c2
+
+# SMTP pour envoi des copies des demandes de devis vers sales@manufa.agency
+# Sans FORM_SMTP_PASSWORD, l'envoi email utilise mail() (souvent indisponible sur NAS).
+FORM_SMTP_HOST=mail.manufa.agency
+FORM_SMTP_PORT=587
+FORM_SMTP_USER=contact@manufa.agency
+FORM_SMTP_PASSWORD=
+
+# Optionnel : URL de base du site (pour data-endpoint absolu)
+# FORM_BASE_URL=https://votresite.com

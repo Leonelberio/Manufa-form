@@ -10,6 +10,9 @@ desktop.ini
 *.swo
 *~
 
+# Env (clés secrètes)
+.env
+
 # Logs
 *.log
 npm-debug.log*

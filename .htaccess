@@ -1,0 +1,10 @@
+# NAS / Apache : page par défaut = index.php
+DirectoryIndex index.php index.html
+
+# Optionnel : interdire l'accès aux fichiers sensibles
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+<Files "config.php">
+    Require all denied
+</Files>
